@@ -1,0 +1,10 @@
+{
+    "name": "StartPage",
+    "version": "1.0",
+    "description": "Minimal start page",
+    "permissions": ["management", "storage"],
+    "chrome_url_overrides" : {
+        "newtab": "index.html"
+    },
+    "manifest_version": 2
+}
