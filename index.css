@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Tajawal');
+
+
 body {
-    
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-family: Tajawal, sans-serif;
 }
