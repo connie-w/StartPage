@@ -28,9 +28,20 @@ var categories = ["social", "google", "code"];
 
 window.onload = function() {
     populateShortcuts();
+    window.addEventListener('keypress', function(event) {
+        const key = event.key; 
+        //alert(key);
+        if (key == "?") {
+            //TODO: implement search
+        } else {
+            goToShortcut(key);
+        }
+    });
 };
 
-// Populates page with website shortcuts, organized by categories
+/**
+ *Populates page with website shortcuts, organized by categories
+ */
 function populateShortcuts() {
     for(let i = 0; i < websites.websites.length; i++) {
         let div = document.createElement("div");
@@ -54,6 +65,21 @@ function populateShortcuts() {
         
         $("shortcut-area").appendChild(div);
     }   
+}
+
+/** 
+ * Goes to the website corresponding to the given shortcut pressed
+ * @param {String} key - key pressed
+ */
+function goToShortcut(key) {
+    for(let i = 0; i < websites.websites.length; i++) {
+        for(let j = 0; j < websites.websites[i].length; j++) {
+            let curr = websites.websites[i][j];
+            if (curr.shortcut == key) {
+                window.location.href = curr.url;
+            }
+        }
+    }
 }
 
 function $(id) {

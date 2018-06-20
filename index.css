@@ -20,9 +20,11 @@ body {
     /*width: 10vw;*/
     
 }
+
 .category p {
     text-align: left;
 }
+
 .category p span {
     display: block;
     float: left;
@@ -34,6 +36,7 @@ body {
     background-color: white;
     color: black;
     margin-right: 10px;
+    /*font-weight: bold;*/
 }
 
 .category p a {
