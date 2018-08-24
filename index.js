@@ -37,6 +37,8 @@ window.onload = function() {
             goToShortcut(key);
         }
     });
+    
+    displayTime();
 };
 
 /**
@@ -80,6 +82,15 @@ function goToShortcut(key) {
             }
         }
     }
+}
+
+function displayTime() {
+    let d = new Date();
+    let h = d.getHours();
+    let m = d.getMinutes();
+    let s = d.getSeconds();
+    let time = h + ":" + m + ":" + s;
+    $("clock").innerText = time;
 }
 
 function $(id) {
