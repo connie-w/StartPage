@@ -1,6 +1,6 @@
 "use strict";
 
-var websites = 
+var websites =
 {
     "websites": [
         [
@@ -29,7 +29,7 @@ var categories = ["social", "google", "code"];
 window.onload = function() {
     populateShortcuts();
     window.addEventListener('keypress', function(event) {
-        const key = event.key; 
+        const key = event.key;
         //alert(key);
         if (key == "?") {
             //TODO: implement search
@@ -37,8 +37,8 @@ window.onload = function() {
             goToShortcut(key);
         }
     });
-    
-    displayTime();
+    setInterval(displayTime, 100);
+    //displayTime();
 };
 
 /**
@@ -51,7 +51,7 @@ function populateShortcuts() {
         let category = document.createElement("h3");
         category.innerHTML = categories[i];
         div.appendChild(category);
-        
+
         for(let j = 0; j < websites.websites[i].length; j++) {
             let curr = websites.websites[i][j];
             let p = document.createElement("p");
@@ -64,12 +64,12 @@ function populateShortcuts() {
             p.appendChild(text);
             div.appendChild(p);
         }
-        
+
         $("shortcut-area").appendChild(div);
-    }   
+    }
 }
 
-/** 
+/**
  * Goes to the website corresponding to the given shortcut pressed
  * @param {String} key - key pressed
  */
@@ -89,13 +89,13 @@ function displayTime() {
     let h = d.getHours();
     let m = d.getMinutes();
     let s = d.getSeconds();
-    let time = h + ":" + m + ":" + s;
+    let ampm = h >= 12 ? 'pm' : 'am';
+    h = h % 12;
+    h = h ? h : 12;
+    let time = h + ":" + m + " " + ampm;
     $("clock").innerText = time;
 }
 
 function $(id) {
     return document.getElementById(id);
 }
-
-
-
