@@ -47,6 +47,7 @@ body {
 
 .category p {
     text-align: left;
+    /*padding-bottom: 10px;*/
 }
 
 .category p span {
@@ -56,7 +57,7 @@ body {
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    line-height: 30px;
+    /*line-height: 30px;*/
     background-color: white;
     color: black;
     margin-right: 10px;
@@ -67,6 +68,7 @@ body {
     color: white;
     text-decoration: none;
     position: relative;
+    line-height: 30px;
 }
 
 .category p a:hover {

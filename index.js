@@ -42,7 +42,7 @@ window.onload = function() {
 };
 
 /**
- *Populates page with website shortcuts, organized by categories
+ * Populates page with website shortcuts, organized by categories
  */
 function populateShortcuts() {
     for(let i = 0; i < websites.websites.length; i++) {
@@ -57,9 +57,10 @@ function populateShortcuts() {
             let p = document.createElement("p");
             let icon = document.createElement("span");
             icon.innerText = curr.shortcut;
-            p.appendChild(icon);
+            //p.appendChild(icon);
             let text = document.createElement("a");
-            text.innerText = curr.name;
+            text.innerHTML = "<span>" + curr.shortcut + "</span>" + curr.name;
+            //text.innerText = curr.name;
             text.href = curr.url;
             p.appendChild(text);
             div.appendChild(p);
@@ -84,6 +85,15 @@ function goToShortcut(key) {
     }
 }
 
+/**
+ * Gets the currently stored website bookmarks
+ */
+function getStoredWebsites() {
+
+}
+/*
+ * Updates the current time in hours/minutes to the clock, in am/pm format
+ */
 function displayTime() {
     let d = new Date();
     let h = d.getHours();
