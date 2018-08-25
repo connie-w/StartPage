@@ -8,17 +8,41 @@ body {
     font-family: Tajawal, sans-serif;
 }
 
+#top-bar {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#top-bar i {
+    margin-right: 5px;
+    color: #999999;
+    /* transition animation */
+    -o-transition:.5s;
+    -ms-transition:.5s;
+    -moz-transition:.5s;
+    -webkit-transition:.5s;
+    transition:.5s;
+}
+
+#top-bar i:hover {
+    color: white;
+}
+
 #shortcut-area {
     display: flex;
     justify-content: center;
     align-items: flex-start;
 }
 
+#search-area {
+    font-size: 24pt;
+}
+
 .category {
     margin-left: 20px;
     margin-right: 20px;
     /*width: 10vw;*/
-    
+
 }
 
 .category p {
@@ -46,7 +70,7 @@ body {
 }
 
 .category p a:hover {
-   color: white; 
+   color: white;
 }
 
 .category a:before {
@@ -69,4 +93,3 @@ body {
   -webkit-transform: scaleX(1);
   transform: scaleX(1);
 }
-

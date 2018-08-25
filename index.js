@@ -92,6 +92,9 @@ function displayTime() {
     let ampm = h >= 12 ? 'pm' : 'am';
     h = h % 12;
     h = h ? h : 12;
+    if(m < 10) {
+      m = "0" + m;
+    }
     let time = h + ":" + m + " " + ampm;
     $("clock").innerText = time;
 }
