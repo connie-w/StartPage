@@ -55,8 +55,8 @@ function populateShortcuts() {
         for(let j = 0; j < websites.websites[i].length; j++) {
             let curr = websites.websites[i][j];
             let p = document.createElement("p");
-            let icon = document.createElement("span");
-            icon.innerText = curr.shortcut;
+            // let icon = document.createElement("span");
+            // icon.innerText = curr.shortcut;
             //p.appendChild(icon);
             let text = document.createElement("a");
             text.innerHTML = "<span>" + curr.shortcut + "</span>" + curr.name;
