@@ -37,7 +37,9 @@ window.onload = function() {
             goToShortcut(key);
         }
     });
+    $("edit").onclick = enterEditMode;
     setInterval(displayTime, 100);
+
     //displayTime();
 };
 
@@ -86,11 +88,37 @@ function goToShortcut(key) {
 }
 
 /**
- * Gets the currently stored website bookmarks
+ * Gets the currently stored website bookmarks using Chrome storage API
  */
 function getStoredWebsites() {
 
 }
+
+/**
+ * Enters the edit view for bookmarks
+ */
+ function enterEditMode() {
+   alert("entering edit mode");
+   let categories = document.querySelectorAll(".category");
+   // go thru categories
+   for(let i = 0; i < categories.length; i++) {
+     let span = document.createElement("span");
+     span.classList.add("fa");
+     span.classList.add("fa-plus");
+     categories[i].appendChild(span);
+
+     // go thru individual websites
+     let websites = categories[i].querySelectorAll("a")
+     for(let j = 0; j < websites.length; j++) {
+       let x = document.createElement("i");
+       x.classList.add("fa");
+       x.classList.add("fa-times");
+       websites[j].querySelector("p")
+       //apendd the child but do it before
+     }
+   }
+ }
+
 /*
  * Updates the current time in hours/minutes to the clock, in am/pm format
  */
