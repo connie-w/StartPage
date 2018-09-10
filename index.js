@@ -39,8 +39,6 @@ window.onload = function() {
     });
     $("edit").onclick = enterEditMode;
     setInterval(displayTime, 100);
-
-    //displayTime();
 };
 
 /**
@@ -56,16 +54,7 @@ function populateShortcuts() {
 
         for(let j = 0; j < websites.websites[i].length; j++) {
             let curr = websites.websites[i][j];
-            let p = document.createElement("p");
-            // let icon = document.createElement("span");
-            // icon.innerText = curr.shortcut;
-            //p.appendChild(icon);
-            let text = document.createElement("a");
-            text.innerHTML = "<span>" + curr.shortcut + "</span>" + curr.name;
-            //text.innerText = curr.name;
-            text.href = curr.url;
-            p.appendChild(text);
-            div.appendChild(p);
+            createShortcut(curr.name, curr.shortcut, curr.url, div);
         }
 
         $("shortcut-area").appendChild(div);
@@ -73,7 +62,24 @@ function populateShortcuts() {
 }
 
 /**
+ * Creates the shortcut link and adds it to the given div
+ * @param {String} name - name of the website
+ * @param {String} shortcut - shortcut key (single letter)
+ * @param {String} url - url of website
+ * @param {HTMLelement} div - div to append the shortcut to
+ */
+function createShortcut(name, shortcut, url, div) {
+  let p = document.createElement("p");
+  let text = document.createElement("a");
+  text.innerHTML = "<span>" + shortcut + "</span>" + name;
+  text.href = url;
+  p.appendChild(text);
+  div.appendChild(p);
+}
+
+/**
  * Goes to the website corresponding to the given shortcut pressed
+ * does not open new tab/window
  * @param {String} key - key pressed
  */
 function goToShortcut(key) {
@@ -105,6 +111,9 @@ function getStoredWebsites() {
      let span = document.createElement("span");
      span.classList.add("fa");
      span.classList.add("fa-plus");
+     span.onclick = function() {
+         promptNewShortcut(categories[i]);
+     };
      categories[i].appendChild(span);
 
      // go thru individual websites
@@ -117,6 +126,19 @@ function getStoredWebsites() {
        //apendd the child but do it before
      }
    }
+ }
+
+ /**
+  * Prompts user for name, shortcut, url of website and creates a new shortcut
+  * with the given information
+  * @param {HTMLelement} category - category to add the new shortcut to
+  */
+ function promptNewShortcut(category) {
+
+    let name = window.prompt("Enter website name: ","Google");
+    let shortcut = window.prompt("Enter keyboard shortcut (case sensitive): ", "G");
+    let url = window.prompt("Enter website url: ", "https://www.google.com/");
+    createShortcut(name, shortcut, url, category);
  }
 
 /*
