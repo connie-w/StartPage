@@ -134,11 +134,49 @@ function getStoredWebsites() {
   * @param {HTMLelement} category - category to add the new shortcut to
   */
  function promptNewShortcut(category) {
-
     let name = window.prompt("Enter website name: ","Google");
+    if (!name) {
+        return 0;
+    }
     let shortcut = window.prompt("Enter keyboard shortcut (case sensitive): ", "G");
+    if (!shortcut) {
+        return 0;
+    }
+    let valid = validateShortcut(shortcut);
+    while(!valid && shortcut) {
+        shortcut = prompt("Enter new shortcut: ", "");
+        valid = validateShortcut(shortcut);
+    }
+
     let url = window.prompt("Enter website url: ", "https://www.google.com/");
+    if (!url) {
+        return 0;
+    }
     createShortcut(name, shortcut, url, category);
+ }
+
+ /**
+  * Returns a boolean of whether the given shortcut is valid
+  * checks that the shortcut is a single letter and not already used
+  * @param {String} shortcut - shortcut to check
+  */
+ function validateShortcut(shortcut) {
+     if (shortcut.length > 1) {
+         alert("shortcut must be 1 letter long");
+         return false;
+     }
+
+     for(let i = 0; i < websites.websites.length; i++) {
+         for(let j = 0; j < websites.websites[i].length; j++) {
+             let curr = websites.websites[i][j];
+             if (curr.shortcut == shortcut) {
+                 alert("shortcut already exists for " + curr.name +
+                 " please choose a new shortcut");
+                 return false;
+             }
+         }
+     }
+     return true;
  }
 
 /*
