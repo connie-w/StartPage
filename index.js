@@ -122,28 +122,20 @@ function getStoredWebsites() {
      // go thru individual websites
      let websites = categories[i].querySelectorAll("p")
      for(let j = 0; j < websites.length; j++) {
-       let x = addDeleteButton();
-       websites[j].appendChild(x);
+        let x = document.createElement("i");
+        x.classList.add("fa");
+        x.classList.add("fa-times");
+        x.style.marginLeft = "10px";
+        x.onclick = function() {
+        let category = categories[i];
+        let websiteName = websites[j].querySelector("a").innerText.substring(1);
+        deleteShortcut(websites[j], websiteName, category);
+        }
+        websites[j].appendChild(x);
      }
    }
  }
 
-/**
- * Creates a delete button and returns it
- * @return {HTMLelement} - x button (to be appended to DOM)
- */
- function addDeleteButton() {
-     let x = document.createElement("i");
-     x.classList.add("fa");
-     x.classList.add("fa-times");
-     x.style.marginLeft = "10px";
-     x.onclick = function() {
-         let category = categories[i];
-         let websiteName = websites[j].querySelector("a").innerText.substring(1);
-         deleteShortcut(websites[j], websiteName, category);
-     }
-     return x;
- }
 
  /**
   * Exits edit mode, removing GUI elements for editing
