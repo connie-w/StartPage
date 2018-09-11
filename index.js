@@ -104,8 +104,11 @@ function getStoredWebsites() {
  * Enters the edit view for bookmarks
  */
  function enterEditMode() {
-   alert("entering edit mode");
    let categories = document.querySelectorAll(".category");
+   let editButton = document.querySelector(".fa-edit");
+   editButton.classList.remove("fa-edit");
+   editButton.classList.add("fa-sign-out");
+   editButton.onclick = exitEditMode;
    // go thru categories
    for(let i = 0; i < categories.length; i++) {
      let span = document.createElement("span");
@@ -122,10 +125,27 @@ function getStoredWebsites() {
        let x = document.createElement("i");
        x.classList.add("fa");
        x.classList.add("fa-times");
-       websites[j].querySelector("p")
-       //apendd the child but do it before
+       websites[j].prepend(x);
+       //apend the child but do it before
      }
    }
+ }
+
+ /**
+  * Exits edit mode, removing GUI elements for editing
+  */
+ function exitEditMode() {
+     let editButton = document.querySelector(".fa-sign-out");
+     editButton.classList.remove("fa-sign-out");
+     editButton.classList.add("fa-edit");
+     editButton.onclick = enterEditMode;
+
+     let categories = document.querySelectorAll(".category");
+     for(let i = 0; i < categories.length; i++) {
+         //remove add button
+        let add = categories[i].querySelector(".fa-plus");
+        categories[i].removeChild(add);
+    }
  }
 
  /**
