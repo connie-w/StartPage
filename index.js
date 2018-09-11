@@ -27,7 +27,10 @@ var websites =
 var categories = ["social", "google", "code"];
 
 window.onload = function() {
-    populateShortcuts();
+    //saveWebsites();
+    getStoredWebsites();
+
+    //populateShortcuts();
     window.addEventListener('keypress', function(event) {
         const key = event.key;
         //alert(key);
@@ -45,7 +48,6 @@ window.onload = function() {
  * Populates page with website shortcuts, organized by categories
  */
 function populateShortcuts() {
-    getStoredWebsites();
     for(let i = 0; i < websites.websites.length; i++) {
         let div = document.createElement("div");
         div.classList.add("category");
@@ -99,17 +101,23 @@ function goToShortcut(key) {
  */
 function getStoredWebsites() {
     chrome.storage.sync.get('storedWebsites', function(result) {
-        console.log('Value currently is ' + result.key);
-        console.log(result.value);
-        if(result.value) {
+        console.log('Value currently is ' + result);
+        console.log(result['storedWebsites']);
+        if(result['storedWebsites']) {
             console.log("loading saved bookmarks");
-            websites = result.value;
+            websites = JSON.parse(result['storedWebsites']);
+            populateShortcuts();
         } else {
-            chrome.storage.sync.set({'storedWebsites': websites}, function() {
-             console.log('Value is set to ' + JSON.stringify(websites));
-           });
+            saveWebsites();
+            populateShortcuts();
         }
     });
+}
+
+function saveWebsites() {
+    chrome.storage.sync.set({'storedWebsites': JSON.stringify(websites)}, function() {
+     console.log('Value is set to ' + JSON.stringify(websites));
+   });
 }
 
 /**
@@ -134,7 +142,16 @@ function getStoredWebsites() {
      // go thru individual websites
      let websites = categories[i].querySelectorAll("p")
      for(let j = 0; j < websites.length; j++) {
-       let x = addDeleteButton();
+       // let x = addDeleteButton(i, j);
+       let x = document.createElement("i");
+       x.classList.add("fa");
+       x.classList.add("fa-times");
+       x.style.marginLeft = "10px";
+       x.onclick = function() {
+           let category = categories[i];
+           let websiteName = websites[j].querySelector("a").innerText.substring(1);
+           deleteShortcut(websites[j], websiteName, category);
+       }
        websites[j].appendChild(x);
      }
    }
@@ -144,7 +161,7 @@ function getStoredWebsites() {
  * Creates a delete button and returns it
  * @return {HTMLelement} - x button (to be appended to DOM)
  */
- function addDeleteButton() {
+ function addDeleteButton(i, j) {
      let x = document.createElement("i");
      x.classList.add("fa");
      x.classList.add("fa-times");
@@ -205,6 +222,7 @@ function deleteShortcut(website, name, category) {
         }
     }
     //TODO: update chrome storage API with this
+    saveWebsites();
 }
 
  /**
@@ -246,6 +264,7 @@ function deleteShortcut(website, name, category) {
     console.log(websites.websites[categoryIndex]);
 
     //TODO: update chrome storage API when new shortcut is added
+    saveWebsites();
  }
 
  /**
