@@ -153,6 +153,19 @@ function getStoredWebsites() {
         return 0;
     }
     createShortcut(name, shortcut, url, category);
+
+    // Adds the new shortcut to the websites object
+    let categoryName = category.querySelector("h3").innerText;
+    let categoryIndex = getCategoryIndex(categoryName);
+    let newShortcut = {
+        name: name,
+        url: url,
+        shortcut: shortcut
+    };
+    websites.websites[categoryIndex].push(newShortcut);
+    console.log(websites.websites[categoryIndex]);
+
+    //TODO: update chrome storage API when new shortcut is added
  }
 
  /**
@@ -177,6 +190,20 @@ function getStoredWebsites() {
          }
      }
      return true;
+ }
+
+ /**
+  * Returns the index of the given category name in the categories array
+  * @param {String} categoryName - string to look for in categories
+  * @return {integer} - index of category if found, else returns -1
+  */
+ function getCategoryIndex(categoryName) {
+     for (let i = 0; i < categories.length; i++) {
+         if(categories[i] == categoryName) {
+             return i;
+         }
+     }
+     return -1;
  }
 
 /*
