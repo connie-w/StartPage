@@ -122,18 +122,27 @@ function getStoredWebsites() {
      // go thru individual websites
      let websites = categories[i].querySelectorAll("p")
      for(let j = 0; j < websites.length; j++) {
-       let x = document.createElement("i");
-       x.classList.add("fa");
-       x.classList.add("fa-times");
-       x.style.marginLeft = "10px";
-       x.onclick = function() {
-           let category = categories[i];
-           let websiteName = websites[j].querySelector("a").innerText.substring(1);
-           deleteShortcut(websites[j], websiteName, category);
-       }
+       let x = addDeleteButton();
        websites[j].appendChild(x);
      }
    }
+ }
+
+/**
+ * Creates a delete button and returns it
+ * @return {HTMLelement} - x button (to be appended to DOM)
+ */
+ function addDeleteButton() {
+     let x = document.createElement("i");
+     x.classList.add("fa");
+     x.classList.add("fa-times");
+     x.style.marginLeft = "10px";
+     x.onclick = function() {
+         let category = categories[i];
+         let websiteName = websites[j].querySelector("a").innerText.substring(1);
+         deleteShortcut(websites[j], websiteName, category);
+     }
+     return x;
  }
 
  /**
@@ -150,6 +159,11 @@ function getStoredWebsites() {
          //remove add button
         let add = categories[i].querySelector(".fa-plus");
         categories[i].removeChild(add);
+        let websites = categories[i].querySelectorAll("p");
+        for(let j = 0; j < websites.length; j++) {
+            let x = websites[j].querySelector(".fa-times");
+            websites[j].removeChild(x);
+        }
     }
  }
 
@@ -183,7 +197,7 @@ function deleteShortcut(website, name, category) {
 
  /**
   * Prompts user for name, shortcut, url of website and creates a new shortcut
-  * with the given information
+  * with the given information and exits edit mode
   * @param {HTMLelement} category - category to add the new shortcut to
   */
  function promptNewShortcut(category) {
@@ -205,6 +219,7 @@ function deleteShortcut(website, name, category) {
     if (!url) {
         return 0;
     }
+    exitEditMode();
     createShortcut(name, shortcut, url, category);
 
     // Adds the new shortcut to the websites object
