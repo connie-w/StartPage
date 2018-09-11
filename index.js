@@ -45,6 +45,7 @@ window.onload = function() {
  * Populates page with website shortcuts, organized by categories
  */
 function populateShortcuts() {
+    getStoredWebsites();
     for(let i = 0; i < websites.websites.length; i++) {
         let div = document.createElement("div");
         div.classList.add("category");
@@ -97,7 +98,18 @@ function goToShortcut(key) {
  * Gets the currently stored website bookmarks using Chrome storage API
  */
 function getStoredWebsites() {
-
+    chrome.storage.sync.get('storedWebsites', function(result) {
+        console.log('Value currently is ' + result.key);
+        console.log(result.value);
+        if(result.value) {
+            console.log("loading saved bookmarks");
+            websites = result.value;
+        } else {
+            chrome.storage.sync.set({'storedWebsites': websites}, function() {
+             console.log('Value is set to ' + JSON.stringify(websites));
+           });
+        }
+    });
 }
 
 /**
