@@ -120,13 +120,18 @@ function getStoredWebsites() {
      categories[i].appendChild(span);
 
      // go thru individual websites
-     let websites = categories[i].querySelectorAll("a")
+     let websites = categories[i].querySelectorAll("p")
      for(let j = 0; j < websites.length; j++) {
        let x = document.createElement("i");
        x.classList.add("fa");
        x.classList.add("fa-times");
-       websites[j].prepend(x);
-       //apend the child but do it before
+       x.style.marginLeft = "10px";
+       x.onclick = function() {
+           let category = categories[i];
+           let websiteName = websites[j].querySelector("a").innerText.substring(1);
+           deleteShortcut(websites[j], websiteName, category);
+       }
+       websites[j].appendChild(x);
      }
    }
  }
@@ -147,6 +152,34 @@ function getStoredWebsites() {
         categories[i].removeChild(add);
     }
  }
+
+/**
+ * deletes given website from the shortcuts, deactivates the keyboard shortcut
+ * @param {HTMLelement} website- website node to be removed
+ * @param {String} name - name of website
+ * @param {HTMLelement} category - category of the website
+ */
+function deleteShortcut(website, name, category) {
+    category.removeChild(website);
+    let categoryName = category.querySelector("h3").innerText;
+    for(let i = 0; i < websites.websites.length; i++) {
+        if (categoryName == categories[i]) {
+            console.log(name);
+            let index = -1;
+            for(let j = 0; j < websites.websites[i].length; j++) {
+                if (websites.websites[i][j].name == name) {
+                    index = j;
+                }
+            }
+            console.log(index);
+            if(index != -1) {
+                websites.websites[i].splice(index,1);
+            }
+            console.log(websites.websites[i]);
+        }
+    }
+    //TODO: update chrome storage API with this
+}
 
  /**
   * Prompts user for name, shortcut, url of website and creates a new shortcut
